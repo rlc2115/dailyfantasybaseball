@@ -17,7 +17,7 @@ Pkg.add("GLPKMathProgInterface")
 using GLPKMathProgInterface
 
 #uncomment this line only if you installed Gurobi, which costs money :(), but is super fast :)
-using Gurobi  
+
 
 
 
