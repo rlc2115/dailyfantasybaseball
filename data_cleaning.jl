@@ -45,6 +45,13 @@ function read_player_data(path_hitters,path_pitchers)
         t = sort([t1,t2]);
         Game = [Game;string(t[1]," ",t[2])];
     end
+function clean_num(x)
+        if isnan(x)
+            return 0;
+        else
+            return  x;
+        end
+    end
 
 
     p=map(clean_num, [pitchers[:Proj_FP]; hitters[:Proj_FP]]);
