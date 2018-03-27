@@ -22,6 +22,56 @@ function clean_order(Order)  #cleans up the batting order so that it is a number
 end
 
 ################################################################################################################
+# read_player_data loads information from hitters and pitchesr files into a single table
+function read_player_data(path_hitters,path_pitchers)
+    pitchers = readtable(path_pitchers);
+    hitters = readtable(path_hitters);
+
+
+    function clean_str(str)
+        if str[1]=='@'
+            return str[2:end];
+        else
+            return  str;
+        end
+    end
+
+    Team = [pitchers[:Team]; hitters[:Team]];
+    Opp=[pitchers[:Opp]; hitters[:Opp]];
+    Game = [];
+    for i = 1:size(Team)[1]
+        t1 = clean_str(Team[i]);
+        t2 = clean_str( Opp[i]);
+        t = sort([t1,t2]);
+        Game = [Game;string(t[1]," ",t[2])];
+    end
+
+    function clean_num(x)
+        if isnan(x)
+            return 0;
+        else
+            return  x;
+        end
+    end
+
+
+    p=map(clean_num, [pitchers[:Proj_FP]; hitters[:Proj_FP]]);
+    proj_val=map(clean_num, [pitchers[:Proj_Val]; hitters[:Proj_Val]]);
+    a=map(clean_num,[pitchers[:Actual_FP]; hitters[:Actual_FP]]);
+    players = DataFrame(Player_Name = [pitchers[:Player_Name]; hitters[:Player_Name]],
+                        Team = [pitchers[:Team]; hitters[:Team]],
+                        Opp=[pitchers[:Opp] ;hitters[:Opp]],
+                        Game = Game,
+                        Pos=[pitchers[:Pos] ;hitters[:Pos]],
+                        Salary=[pitchers[:Salary] ;hitters[:Salary]],
+                        Proj_FP=p,
+                        Proj_Val = proj_val,
+                        Actual_FP=a,
+                        Batting_Order_Confirmed_ = [round(Int,zeros(size(pitchers)[1])); clean_order(hitters[:Batting_Order_Confirmed_])]
+                        );
+
+    return players;
+end
 
 ###################################################################################################
 # Output CSV file to upload to DraftKings
@@ -464,5 +514,4 @@ function lineup_points_actual(path_lineups,path_hitters,path_pitchers,path_outpu
     close(outfile)
 
 end
-
 
