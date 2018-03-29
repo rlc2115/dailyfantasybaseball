@@ -1,6 +1,6 @@
 # This code solves for multiple baseball lineups
 
-include("data_cleaning.jl")
+
 include("baseball_formulations.jl")  #this code has all the different formualations
 
 
