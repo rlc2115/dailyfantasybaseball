@@ -1,3 +1,4 @@
+using DataArrays
 #this file has a bunch of data cleaning functions
 using DataFrames
 
