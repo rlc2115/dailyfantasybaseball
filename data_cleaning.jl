@@ -5,7 +5,22 @@ using DataFrames
 
 
 ################################################################################################################
-
+function clean_order(Order)  #cleans up the batting order so that it is a number
+    Order_clean =[];
+    for order in Order
+        if ~(typeof(order)==DataArrays.NAtype)
+            if isa(parse(order), Number) 
+                order_clean = parse(order); 
+            else
+                order_clean = 0;
+            end
+        else
+            order_clean=0;
+        end
+        Order_clean = [Order_clean;order_clean];
+    end
+    return Order_clean;
+end
 
 ################################################################################################################
 # read_player_data loads information from hitters and pitchesr files into a single table
