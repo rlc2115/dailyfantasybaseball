@@ -118,7 +118,7 @@ function baseball_formulation(players, old_lineups, num_overlap,stack_size, P,B1
                    sum{players_teams[t, i]*players_stacks[t, j]*(1-P[t])*players_lineup[t], t=1:num_players})  
     
     #make sure at least one stack is used
-    @addConstraint(m, sum{used_stack_batters[i,j], i=1:num_teams,j=1:num_stacks} >= 1)  
+    @addConstraint(m, sum{used_stack_batters[i,j], i=1:num_teams,j=1:num_stacks} >= 2)  
 	
 	
 
